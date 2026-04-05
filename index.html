@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Розпізнавання тексту</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>Веб-додаток для розпізнавання тексту</h1>
+    <h1>Завантажити зображення</h1>
+
+    <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+
+        <!-- Drag-and-drop зона -->
+        <div id="dropArea">
+            <p>Перетягніть фото сюди або натисніть, щоб вибрати</p>
+            <img id="preview" src="" alt="" style="display:none;">
+        </div>
+
+        <!-- Прихований input -->
+        <input id="imageInput" type="file" name="image" accept="image/*" required hidden>
+        <div class="model-selector">
+            <span class="label-text">Тип тексту:</span>
+            <div class="toggle-container">
+                <input type="radio" id="printed" name="model_type" value="printed" checked>
+                <label for="printed">Друкований (Tesseract)</label>
+
+                <input type="radio" id="handwritten" name="model_type" value="handwritten">
+                <label for="handwritten">Рукописний (TrOCR)</label>
+            </div>
+        </div>
+        <button type="submit">Розпізнати</button>
+        <button id="clearBtn" style="display:none;">Видалити зображення</button>
+
+        <div class="result-container">
+            <textarea id="result" placeholder="Тут з'явиться розпізнаний текст..." rows="8"></textarea>
+            <div class="action-buttons">
+                <button type="button" id="copyBtn" style="display:none;">Скопіювати</button>
+            </div>
+        </div>
+        <button id="copyBtn" style="display:none;">Скопіювати</button>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
