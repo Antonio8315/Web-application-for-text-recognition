@@ -9,10 +9,26 @@ const copyBtn = document.getElementById("copyBtn");
 // Клік — відкриття вибору файлу
 dropArea.addEventListener("click", () => imageInput.click());
 
-// Вибір через input
+// Валідація типу файлу
+function validateFile(file) {
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+    if (!allowedExtensions.exec(file.name)) {
+        alert('Невідповідний тип файлу! Будь ласка, завантажте зображення у форматі .png або .jpg');
+        imageInput.value = "";
+        preview.src = "";
+        preview.style.display = "none";
+        dropArea.classList.remove("active");
+        return false;
+    }
+    return true;
+}
+
 imageInput.addEventListener("change", () => {
     if (imageInput.files.length > 0) {
-        showPreview(imageInput.files[0]);
+        const file = imageInput.files[0];
+        if (validateFile(file)) {
+            showPreview(file);
+        }
     }
 });
 
@@ -33,11 +49,12 @@ dropArea.addEventListener("drop", (e) => {
     if (e.dataTransfer.files.length > 0) {
         const file = e.dataTransfer.files[0];
 
-        const dt = new DataTransfer();
-        dt.items.add(file);
-        imageInput.files = dt.files;
-
-        showPreview(file);
+        if (validateFile(file)) {
+            const dt = new DataTransfer();
+            dt.items.add(file);
+            imageInput.files = dt.files;
+            showPreview(file);
+        }
     }
 });
 
